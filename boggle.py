@@ -64,29 +64,11 @@ class Boggle():
         if len(word) == 1:
             return True
 
-        # Otherwise, this letter is good, so note that we've seen it,
-        # and try of all of its neighbors for the first letter of the
-        # rest of the word
-        # This next line is a bit tricky: we want to note that we've seen the
-        # letter at this location. However, we only want the child calls of this
-        # to get that, and if we used `seen.add(...)` to add it to our set,
-        # *all* calls would get that, since the set is passed around. That would
-        # mean that once we try a letter in one call, it could never be tried again,
-        # even in a totally different path. Therefore, we want to create a *new*
-        # seen set that is equal to this set plus the new letter. Being a new
-        # object, rather than a mutated shared object, calls that don't descend
-        # from us won't have this `y,x` point in their seen.
-        #
-        # To do this, we use the | (set-union) operator, read this line as
-        # "rebind seen to the union of the current seen and the set of point(y,x))."
-        #
-        # (this could be written with an augmented operator as "seen |= {(y, x)}",
-        # in the same way "x = x + 2" can be written as "x += 2", but that would seem
-        # harder to understand).
+        
 
         seen = seen | {(y, x)}
 
-        # adding diagonals
+       
 
         if y > 0:
             if self.find_from(board, word[1:], y - 1, x, seen):
@@ -125,17 +107,13 @@ class Boggle():
         return False
 
     def find(self, board, word):
-        """Can word be found in board?"""
-
-        # Find starting letter --- try every spot on board and,
-        # win fast, should we find the word at that place.
+        
 
         for y in range(0, 5):
             for x in range(0, 5):
                 if self.find_from(board, word, y, x, seen=set()):
                     return True
 
-        # We've tried every path from every starting square w/o luck.
-        # Sad panda.
+        
 
         return False
